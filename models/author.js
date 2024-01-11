@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-// Creating a Schema/table
+// Creating a Schema/table - responsible to create and read docs
 const authorSchema = new mongoose.Schema({
-    name: { // name Column
+    name: { 
         type: String,
         required: true
     }
