@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Author = require('../models/author')
+const Author = require('../models/author'); // Models
 
 // All Author Route
 router.get('/', async (req, res) =>{
     let search = {};
-    if(req.query.authorName != null || req.query.authorName != ''){
+    if (req.query.authorName != null || req.query.authorName != ''){
         search.name = new RegExp(req.query.authorName, 'i');
     }
     // Error Handlers
@@ -25,7 +25,7 @@ router.get('/new', (req, res) =>{
     res.render('authors/new', { author: new Author()});
 });
 
-// Create Author Route
+// Create Author
 router.post('/', async (req, res) => {
     const author = new Author({
         name: req.body.authorsName // Inputted value in HTML input
