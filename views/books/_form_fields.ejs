@@ -18,8 +18,8 @@
 <div>
     <label>Publish Date</label>
     <input type="date" name="publishDate" 
-    value="<% book.publishDate == null ? '' : 
-    book.publishDate.ToISOString().split('T')[0] %>"> <!-- splits and takes the date only in '2003-11-26T1:30' -->
+        value="<% book.publishDate == null ? '' : 
+        book.publishDate.toISOString().split('T')[0] %>"> <!-- splits and takes the date only in '2003-11-26T1:30' -->
 </div>
 <div>
     <label>Page Count</label>
