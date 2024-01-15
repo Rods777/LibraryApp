@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer'); // Module for multipart/form-data
+// const multer = require('multer'); // Module for multipart/form-data
 const fs = require('fs')
 const Book = require('../models/book');
 const Author = require('../models/author');
 const path = require('path');
 const uploadPath = path.join('public/', Book.coverImageBasePath);
-const imageMimeTypes = ['image/jpg', 'image/jpeg', 'image/png']; // File types
-const upload = multer({
-    dest: uploadPath,
-    fileFilter: (req, file, callback) => {
-        callback(null, imageMimeTypes.includes(file.mimetype))
-    }
-})
+// const imageMimeTypes = ['image/jpg', 'image/jpeg', 'image/png']; // File types
+// const upload = multer({
+//     dest: uploadPath,
+//     fileFilter: (req, file, callback) => {
+//         callback(null, imageMimeTypes.includes(file.mimetype))
+//     }
+// })
 
 // All Books Route
 router.get('/', async (req, res) => {
@@ -45,7 +45,7 @@ router.get('/new', async (req, res) => {
 });
 
 // Create Books Route
-router.post('/', upload.single('cover'), async (req, res) => {
+router.post('/', async (req, res) => {
     const fileName = req.file != null ? req.file.filename : null; // using ternary operator if the file contains image
     const book = new Book({
         title: req.body.title,
