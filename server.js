@@ -7,6 +7,7 @@ if (process.env.NODE_ENV !== 'production'){
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require('method-override') // REST - for put and delete
 
 const indexRouter = require('./routes/index');
 const authorsRouter = require('./routes/authors');
@@ -20,6 +21,7 @@ app.set('layout', 'layouts/layout'); // layout files in views/layouts folder
 app.use(expressLayouts);
 app.use(express.static('public')); // static files (e.g. HTML, images, etc.)
 app.use(express.urlencoded({ limit: '10mb', extended: false }));
+app.use(methodOverride('_method')); // override with POST having ?_method=DELETE
 
 
 // Database Connections (MongoDB)

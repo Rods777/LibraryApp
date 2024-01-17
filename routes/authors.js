@@ -34,13 +34,67 @@ router.post('/', async (req, res) => {
     // Error Handlers
     try {
         const newAuthor = await author.save(); // Awaits the created data to be saved
-        // res.redirect(`authors/${newAuthor.id}`);
-        res.redirect(`authors`);
+        res.redirect(`authors/${newAuthor.id}`);
     } catch { 
         res.render('authors/new', {
             author: author,
             errorMessage: 'Error Creating Author'
         });
+    }
+});
+
+// View Author Page
+router.get('/:id', (req, res) => {
+    res.send('Show the user ' + req.params.id);
+});
+
+// Edit Author Page
+router.get('/:id/edit', async (req, res) => {
+    try {
+        const author = await Author.findById(req.params.id);
+        res.render('authors/edit', { author: author});
+    } catch {
+        res.redirect('authors/');
+    }
+    
+})
+
+// Edit Author
+router.put('/:id', async (req, res) => {
+    let author
+
+    // Error Handlers
+    try {
+        author = await Author.findById(req.params.id)
+        author.name = req.body.authorsName;
+        await author.save(); // Awaits the updated data to be saved
+        res.redirect(`/authors/${author.id}`);
+    } catch {
+        if (author == null){
+            res.redirect(`/`);
+        } else {
+            res.render('authors/edit', {
+                author: author,
+                errorMessage: 'Error Editing Author'
+            });
+        }
+    }
+});
+
+// Delete Author
+router.delete('/:id', async (req, res) => {
+    let author
+    // Error Handlers
+    try {
+        author = await Author.findById(req.params.id)
+        await author.remove(); // Awaits data to be remove/deleted
+        res.redirect('/authors');
+    } catch {
+        if (author == null){
+            res.redirect(`/`);
+        } else {
+            res.render(`authors/${author.id}`);
+        }
     }
 })
 
