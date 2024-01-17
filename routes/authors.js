@@ -87,13 +87,13 @@ router.delete('/:id', async (req, res) => {
     // Error Handlers
     try {
         author = await Author.findById(req.params.id)
-        await author.remove(); // Awaits data to be remove/deleted
+        await author.deleteOne(); // Awaits data to be remove/deleted
         res.redirect('/authors');
     } catch {
         if (author == null){
             res.redirect(`/`);
         } else {
-            res.render(`authors/${author.id}`);
+            res.redirect(`/authors/${author.id}`);
         }
     }
 })
