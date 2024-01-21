@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Author = require('../models/author'); // Models
+
+// Models
+const Author = require('../models/author');
+const Book = require('../models/book');
 
 // All Author Route
 router.get('/', async (req, res) =>{
@@ -44,8 +47,17 @@ router.post('/', async (req, res) => {
 });
 
 // View Author Page
-router.get('/:id', (req, res) => {
-    res.send('Show the user ' + req.params.id);
+router.get('/:id', async (req, res) => {
+    try{
+        const author = await Author.findById(req.params.id);
+        const books = await Book.find({ authorName: author.id }).limit(6).exec();
+        res.render('authors/show', {
+            author: author,
+            booksByAuthor: books
+        });
+    } catch {
+        res.redirect('/');
+    }
 });
 
 // Edit Author Page
